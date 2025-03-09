@@ -10,7 +10,7 @@
     <h1>Lista de Produtos</h1>
     <p>Lista de Produtos será exibida aqui.</p>
 
-    <form action= "/" method="post">
+    <form action= "/Super_List/routes/web.php" method="post">
         <input type="hidden" name="action" value="add">
         <input type="text" name="nome" placeholder="Nome do Produto" required>
         <input type="number" step="0.01" name="preco" placeholder="Preço" required>
@@ -21,17 +21,19 @@
         <tr>
             <th>Produto</th>
             <th>Preço</th>
-            <th>Ações</th>
         </tr>
-        <?php foreach ($produtos as $produto): ?>
-            <tr>
-                <td><?= htmlspecialchars($produto["nome"]) ?></td>
-                <td>R$ <?= number_format($produto["preco"], 2, ",", ".") ?></td>
-                <td>
-                    <a href="?action=delete&id=<?= $produto["id"] ?>" onclick="return confirm('Tem certeza que deseja deletar?')"></a>
-                </td>
-            </tr>
-            <?php endforeach;?>
+        <?php if (!empty($produtos)): ?>
+    <?php foreach ($produtos as $produto): ?>
+        <tr>
+            <td><?= htmlspecialchars($produto['nome']) ?></td>
+            <td><?= htmlspecialchars($produto['preco']) ?></td>
+        </tr>
+    <?php endforeach; ?>
+<?php else: ?>
+    <tr>
+        <td colspan="2">Nenhum produto encontrado.</td>
+    </tr>
+<?php endif; ?>
     </table>
 </body>
 </html>

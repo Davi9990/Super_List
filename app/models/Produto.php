@@ -1,11 +1,31 @@
 <?php
-require_once __DIR__ . "/../../../config/database.php";
+
+require_once __DIR__ . "/../../config/database.php";
+
 
 class Produto {
     private $db;
 
     public function __construct() {
         $this->db = Database::connect(); // Garante que é uma instância de PDO
+    }
+
+    //Função para pegar todos os produtos
+    public function getAll()
+    {
+        $sql = "SELECT * FROM produtos";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(); // Retorna todos os produtos
+    }
+
+    public function create($nome, $preco)
+    {
+        $sql = "INSERT INTO produtos (nome, preco) VALUES (:nome, :preco)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":nome", $nome);
+        $stmt->bindParam(":preco", $preco);
+        return $stmt->execute();
     }
 
     public function listar() {

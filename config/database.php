@@ -9,13 +9,20 @@ class Database{
 
     public static function connect()
     {
-        try{
-            return new PDO("mysql:host=".self::$host.";dbname=".self::$dbname, self::$user, self::$pass,[
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-            ]);
-        }catch(PDOException $e){
-            die("Erro de conexão(Meu pau na sua mão): ".$e->getMessage());
+        if (self::$pdo === null) { // Se ainda não há uma conexão, cria uma nova
+            try {
+                self::$pdo = new PDO(
+                    "mysql:host=" . self::$host . ";dbname=" . self::$dbname,
+                    self::$user,
+                    self::$pass,
+                    [
+                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                    ]
+                );
+            } catch (PDOException $e) {
+                die("Erro de conexão(Meu Pau na sua Mão): " . $e->getMessage());
+            }
         }
         return self::$pdo;
     }
