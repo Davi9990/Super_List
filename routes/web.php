@@ -23,13 +23,14 @@ if ($request_method === "POST") {
 } elseif ($request_method === "GET") {
     if (isset($_GET["action"]) && $_GET["action"] === "delete") {
         $controller->delete();
-    } elseif ($request_uri === "/Super_List/produto/store") {
-        $controller->store();
     } else {
+        // Se for um GET sem ação específica, exibe a lista de produtos
         $controller->index();
     }
 } else {
+    // Para qualquer outro método HTTP, apenas exibe os produtos
     $controller->index();
 }
+
 
 ?>

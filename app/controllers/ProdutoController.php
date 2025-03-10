@@ -14,8 +14,13 @@ class ProdutoController
 
     public function index()
     {
+        require_once __DIR__ . "/../models/Produto.php";
+
         $produto = new Produto();
-        $produtos = $produto->getAll();
+        $produtos = $produto->getAll();//Método que busca todos os produtos 
+
+        echo "<pre>"; print_r($produtos); echo "</pre>"; // Teste para ver os produtos antes da view
+        die(); // Interrompe a execução para ver o que está sendo enviado
 
         require_once __DIR__."/../../view/produtos/index.php";
     }

@@ -13,10 +13,9 @@ class Produto {
     //Função para pegar todos os produtos
     public function getAll()
     {
-        $sql = "SELECT * FROM produtos";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(); // Retorna todos os produtos
+        $pdo = Database::connect();
+        $stmt = $pdo->query("SELECT * FROM produtos"); // Verifique se o nome da tabela está correto!
+        return $stmt->fetchAll();
     }
 
     public function create($nome, $preco)
