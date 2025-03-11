@@ -1,7 +1,6 @@
 <?php
 
-
-require_once __DIR__ . "/../../view/produtos/index.php";
+//require_once __DIR__ . "/../../view/produtos/index.php";
 require_once __DIR__ . "/../models/Produto.php";
 
 class ProdutoController
@@ -15,29 +14,29 @@ class ProdutoController
 
     public function index()
     {
-        require_once __DIR__ . "/../models/Produto.php";
+        $produtos = $this->produto->getAll(); // Recupera os produtos do banco
 
-        $produto = new Produto();
-        $produtos = $produto->getAll();//Método que busca todos os produtos 
-
-        require_once __DIR__."/../../view/produtos/index.php";
+        include_once __DIR__ . "/../../view/produtos/index.php";
     }
 
     public function store()
     {
-        $nome = $_POST["nome"] ?? "";
-        $preco = $_POST["preco"] ?? "";
-
-        if(!empty($nome) && !empty($preco))
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            require_once __DIR__."/../models/Produto.php";
-            $produto = new Produto();
-            $produto->create($nome, $preco);
-        }
+            $nome = $_POST["nome"] ?? "";
+            $preco = $_POST["preco"] ?? "";
 
-        // Redireciona para a página correta que exibe os produtos
-        header("Location: /Super_List/routes/web.php");
-        exit(); // IMPORTANTE: Encerra a execução para evitar bugs
+            if(!empty($nome) && !empty($preco))
+            {
+                require_once __DIR__."/../models/Produto.php";
+                $produto = new Produto();
+                $produto->create($nome, $preco);
+            }
+
+            header("Location: /Super_List/routes/web.php");
+
+            //$this->produto->deletar($_GET["id"]);
+        }
     }
 
     public function delete()
@@ -49,6 +48,7 @@ class ProdutoController
         header("Location: /");
     }
 
+    
     public function getALL()
     {
         require_once __DIR__."/../../config/database.php";
@@ -56,5 +56,6 @@ class ProdutoController
         $stmt = $pdo->query("SELECT * FROM produtos");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 }
 ?>

@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../../config/database.php";
 
 
+
 class Produto {
     private $db;
 
@@ -16,6 +17,8 @@ class Produto {
         $pdo = Database::connect();
         $stmt = $pdo->query("SELECT * FROM produtos"); // Verifique se o nome da tabela está correto!
         return $stmt->fetchAll();
+    
+        return $result;
     }
 
     public function create($nome, $preco)
