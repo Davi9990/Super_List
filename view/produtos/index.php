@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt_BR">
 <head>
@@ -9,7 +11,6 @@
 <body>
 
     <pre><?php print_r($produtos); ?></pre><!-- Exibe o conteúdo da variável para depuração -->
-
     <h1>Lista de Produtos</h1>
     <p>Lista de Produtos será exibida aqui.</p>
 

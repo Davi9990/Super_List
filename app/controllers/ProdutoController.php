@@ -1,5 +1,6 @@
 <?php
 
+
 require_once __DIR__ . "/../../view/produtos/index.php";
 require_once __DIR__ . "/../models/Produto.php";
 
@@ -19,30 +20,24 @@ class ProdutoController
         $produto = new Produto();
         $produtos = $produto->getAll();//Método que busca todos os produtos 
 
-        echo "<pre>"; print_r($produtos); echo "</pre>"; // Teste para ver os produtos antes da view
-        die(); // Interrompe a execução para ver o que está sendo enviado
-
         require_once __DIR__."/../../view/produtos/index.php";
     }
 
     public function store()
     {
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        $nome = $_POST["nome"] ?? "";
+        $preco = $_POST["preco"] ?? "";
+
+        if(!empty($nome) && !empty($preco))
         {
-            $nome = $_POST["nome"] ?? "";
-            $preco = $_POST["preco"] ?? "";
-
-            if(!empty($nome) && !empty($preco))
-            {
-                require_once __DIR__."/../models/Produto.php";
-                $produto = new Produto();
-                $produto->create($nome, $preco);
-            }
-
-            header("Location: /Super_List");
-
-            //$this->produto->deletar($_GET["id"]);
+            require_once __DIR__."/../models/Produto.php";
+            $produto = new Produto();
+            $produto->create($nome, $preco);
         }
+
+        // Redireciona para a página correta que exibe os produtos
+        header("Location: /Super_List/routes/web.php");
+        exit(); // IMPORTANTE: Encerra a execução para evitar bugs
     }
 
     public function delete()
