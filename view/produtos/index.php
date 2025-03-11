@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>supeList</title>
+    <title>superList</title>
     <link rel = "stylesheet" href="/Super_List/public/css/style.css">
 </head>
 <body>
@@ -24,6 +24,7 @@
             <th>ID</th>
             <th>Produto</th>
             <th>Preço</th>
+            <th>Ação</th>
         </tr>
         <?php if (!empty($produtos)): ?>
     <ul>
@@ -32,6 +33,14 @@
             <td><?= htmlspecialchars($produto['id'])  ?></td>
             <td><?= htmlspecialchars($produto['nome']) ?></td>
             <td><?= htmlspecialchars($produto['preco']) ?></td>
+            <td>
+                <a href = "/Super_List/routes/web.php?action=delete&id=<?= $produto['id'] ?>"
+                    onclick="return confirm('Tem certeza que deseja excluir este produto?')">
+                    <button style="background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer;">
+                            Excluir
+                    </button>
+                </a>
+            </td>
         </tr>
     <?php endforeach; ?>
     </ul>

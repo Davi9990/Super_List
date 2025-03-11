@@ -45,7 +45,7 @@ class ProdutoController
         {
             $this->produto->deletar($_GET["id"]);    
         }
-        header("Location: /");
+        header("Location: /Super_List/routes/web.php");
     }
 
     

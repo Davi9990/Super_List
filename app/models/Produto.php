@@ -42,7 +42,8 @@ class Produto {
 
     public function deletar($id) {
         $stmt = $this->db->prepare("DELETE FROM produtos WHERE id = :id");
-        return $stmt->execute(["id" => $id]);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }
 ?>
