@@ -16,7 +16,7 @@ class ProdutoController
     {
         $produtos = $this->produto->getAll(); // Recupera os produtos do banco
 
-        include_once __DIR__ . "/../../view/produtos/index.php";
+        include_once __DIR__ . "/../view/produtos/index.php";
     }
 
     public function store()
@@ -33,7 +33,7 @@ class ProdutoController
                 $produto->create($nome, $preco);
             }
 
-            header("Location: /Super_List/routes/web.php");
+            header("Location: /Super_List2/app/public/index.php");
 
             //$this->produto->deletar($_GET["id"]);
         }
@@ -45,13 +45,13 @@ class ProdutoController
         {
             $this->produto->deletar($_GET["id"]);    
         }
-        header("Location: /Super_List/routes/web.php");
+        header("Location: /Super_List2/app/public/index.php");
     }
 
     
     public function getALL()
     {
-        require_once __DIR__."/../../config/database.php";
+        require_once __DIR__."/../config/database.php";
         global $pdo;
         $stmt = $pdo->query("SELECT * FROM produtos");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

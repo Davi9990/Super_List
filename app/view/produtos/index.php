@@ -5,21 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>superList</title>
-    <link rel = "stylesheet" href="/Super_List/public/css/style.css">
+    <link rel = "stylesheet" href="../public/css/style.css">
 </head>
 <body>
 
     <h1>Lista de Produtos</h1>
 
 
-    <form action= "/Super_List/routes/web.php" method="post">
+    <form action= "/Super_List2/app/public/index.php" method="post">
         <input type="hidden" name="action" value="add">
         <input type="text" name="nome" placeholder="Nome do Produto" required>
         <input type="number" step="0.01" name="preco" placeholder="Preço" required>
         <button type="submit">Adicionar</button>
     </form>
 
-    <table>
+    <table border="1">
         <tr>
             <th>ID</th>
             <th>Produto</th>
@@ -34,7 +34,7 @@
             <td><?= htmlspecialchars($produto['nome']) ?></td>
             <td><?= htmlspecialchars($produto['preco']) ?></td>
             <td>
-                <a href = "/Super_List/routes/web.php?action=delete&id=<?= $produto['id'] ?>"
+            <a href = "/Super_List2/app/routes/web.php?action=delete&id=<?= $produto['id'] ?>"
                     onclick="return confirm('Tem certeza que deseja excluir este produto?')">
                     <button style="background-color: red; color: white; border: none; padding: 5px 10px; cursor: pointer;">
                             Excluir
