@@ -1,3 +1,6 @@
+<?php
+    namespace index;
+?>
 
 <!DOCTYPE html>
 <html lang="pt_BR">

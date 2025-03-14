@@ -1,5 +1,8 @@
 <?php
 
+namespace app\routes;
+use app\controllers\ProdutoController;
+
 require_once __DIR__ . "/../controllers/ProdutoController.php";
 
 $controller = new ProdutoController();

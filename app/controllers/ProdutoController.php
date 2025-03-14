@@ -1,5 +1,10 @@
 <?php
 
+namespace app\controllers;
+use app\config\Database;
+use app\models\Produto;
+use view\produtos\index;
+
 //require_once __DIR__ . "/../../view/produtos/index.php";
 require_once __DIR__ . "/../models/Produto.php";
 
