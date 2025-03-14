@@ -1,9 +1,10 @@
 <?php
 
-namespace app\controllers;
-use app\config\Database;
-use app\models\Produto;
+namespace App\controllers;
+use App\config\Database;
+use App\models\Produto;
 use view\produtos\index;
+use PDO;
 
 //require_once __DIR__ . "/../../view/produtos/index.php";
 require_once __DIR__ . "/../models/Produto.php";
@@ -56,11 +57,10 @@ class ProdutoController
     
     public function getALL()
     {
-        require_once __DIR__."/../config/database.php";
-        global $pdo;
+        // Use o método connect da classe Database para obter a instância do PDO
+        $pdo = \App\config\Database::connect(); // Chama a função connect() da classe Database
         $stmt = $pdo->query("SELECT * FROM produtos");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
+    }  
 }
 ?>

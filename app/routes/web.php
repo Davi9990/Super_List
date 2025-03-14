@@ -1,7 +1,7 @@
 <?php
 
-namespace app\routes;
-use app\controllers\ProdutoController;
+namespace App\routes;
+use App\controllers\ProdutoController;
 
 require_once __DIR__ . "/../controllers/ProdutoController.php";
 
