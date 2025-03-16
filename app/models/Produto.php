@@ -34,6 +34,7 @@ class Produto {
     }
 
     public function listar() {
+        $pdo = Database::connect();
         $stmt = $this->db->query("SELECT * FROM produtos ORDER BY id DESC"); 
         return $stmt->fetchAll();
     }
@@ -44,6 +45,7 @@ class Produto {
     }
 
     public function deletar($id) {
+        $pdo = Database::connect();
         $stmt = $this->db->prepare("DELETE FROM produtos WHERE id = :id");
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         return $stmt->execute();

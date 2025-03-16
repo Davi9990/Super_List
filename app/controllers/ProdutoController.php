@@ -13,9 +13,9 @@ class ProdutoController
 {
     private $produto;
 
-    public function __construct()
+    public function __construct(Produto $produto = null)
     {
-        $this->produto = new Produto();
+        $this->produto = $produto ?? new Produto();
     }
 
     public function index()
@@ -35,8 +35,8 @@ class ProdutoController
             if(!empty($nome) && !empty($preco))
             {
                 require_once __DIR__."/../models/Produto.php";
-                $produto = new Produto();
-                $produto->create($nome, $preco);
+                //$produto = new Produto();
+                $this->produto->create($nome, $preco);
             }
 
             header("Location: /Super_List2/app/public/index.php");
@@ -57,10 +57,7 @@ class ProdutoController
     
     public function getALL()
     {
-        // Use o método connect da classe Database para obter a instância do PDO
-        $pdo = \App\config\Database::connect(); // Chama a função connect() da classe Database
-        $stmt = $pdo->query("SELECT * FROM produtos");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->produto->getAll(); // Agora retorna direto do objeto injetado
     }  
 }
 ?>

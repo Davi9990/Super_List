@@ -1,42 +1,63 @@
 <?php
 
-
 use App\controllers\ProdutoController;
 use App\models\Produto;
-use Mockery as m;
+use Mockery;
 
-test('Produto Controller Funcionando com exito', function(){
+beforeEach(function () {
+    $this->produtoMock = Mockery::mock(Produto::class);
+    $this->produtoController = new ProdutoController($this->produtoMock);
+});
 
-   // Criar um mock da classe Produto
-   $produtoMock = m::mock(Produto::class);
-   $produtoMock->shouldReceive('getAll')->andReturn([
-       ['id' => 1, 'nome' => 'Produto 1', 'preco' => 10.0],
-       ['id' => 2, 'nome' => 'Produto 2', 'preco' => 20.0]
-   ]);
+test('ProdutoController retorna todos os produtos corretamente', function () {
+    // Simulando retorno do banco
+    $this->produtoMock->shouldReceive('getAll')
+        ->once()
+        ->andReturn([
+            ['id' => 1, 'nome' => 'Produto 1', 'preco' => 10.0],
+            ['id' => 2, 'nome' => 'Produto 2', 'preco' => 20.0]
+        ]);
 
-   // Criar a instância do Controller, injetando o mock
-   $produtoController = new ProdutoController();
-   
-   // Refletir a propriedade privada para substituir pelo mock
-   $reflection = new ReflectionClass($produtoController);
-   $property = $reflection->getProperty('produto');
-   $property->setAccessible(true);
-   $property->setValue($produtoController, $produtoMock);
+    $produtos = $this->produtoController->getALL();
 
-   // Executar o método index() (deve retornar os produtos)
-   $produtos = $produtoController->getAll();
+    expect($produtos)->toBe([
+        ['id' => 1, 'nome' => 'Produto 1', 'preco' => 10.0],
+        ['id' => 2, 'nome' => 'Produto 2', 'preco' => 20.0]
+    ]);
+});
 
-   // Verificar se os produtos retornados são os esperados
-   expect($produtos)->toBe([
-    ['id' => 15, 'nome' => 'Leite Ninho', 'preco' => 3.90],
-    ['id' => 16, 'nome' => 'Suco de Fruta', 'preco' => 0.90],
-    ['id' => 20, 'nome' => 'Leite de coco', 'preco' => 50.00],
-    ['id' => 23, 'nome' => 'Costela', 'preco' => 20.90],
-    ['id' => 24, 'nome' => 'Burrito de Frango', 'preco' => 4.90],
-    ['id' => 25, 'nome' => 'Pão de Queijo', 'preco' => 5.00],
-    ['id' => 26, 'nome' => 'Misto Quente', 'preco' => 3.50]
-   ]);
-    
-}
-);
+test('ProdutoController adiciona um produto corretamente', function () {
+    // Simula chamada ao método create()
+    $this->produtoMock->shouldReceive('create')
+        ->once()
+        ->with('Novo Produto', 15.50);
+
+    $_SERVER['REQUEST_METHOD'] = 'POST';
+    $_POST['nome'] = 'Novo Produto';
+    $_POST['preco'] = 15.50;
+
+    $this->produtoController->store();
+
+    unset($_POST, $_SERVER['REQUEST_METHOD']);
+});
+
+
+// Teste para o método delete
+test('ProdutoController exclui um produto corretamente', function () {
+    $produtoId = 1; // ID do produto a ser excluído
+
+    // Simula a chamada ao método deletar()
+    $this->produtoMock->shouldReceive('deletar')
+        ->once()
+        ->with($produtoId);
+
+    // Simula a passagem do ID do produto via $_GET
+    $_GET['id'] = $produtoId;
+
+    // Chama o método delete()
+    $this->produtoController->delete();
+
+    unset($_GET); // Limpa a variável global $_GET
+});
+
 ?>

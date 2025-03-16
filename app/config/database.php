@@ -26,7 +26,7 @@ class Database{
                     ]
                 );
             } catch (PDOException $e) {
-                die("Erro de conexão(Meu Pau na sua Mão): " . $e->getMessage());
+                die("Erro de conexão: " . $e->getMessage());
             }
         }
         return self::$pdo;
