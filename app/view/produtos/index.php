@@ -1,5 +1,6 @@
 <?php
     namespace index;
+
 ?>
 
 <!DOCTYPE html>
