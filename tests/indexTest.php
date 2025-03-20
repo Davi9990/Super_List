@@ -53,4 +53,16 @@ it('gera link de exclusão corretamente', function () {
      expect(strpos($response, "/Super_List2/app/routes/web.php?action=delete&id=$id"))->toBeGreaterThanOrEqual(0);
 });
 
+
+it('Exibe o formulário de edição corretamente', function () {
+    ob_start();
+    include __DIR__ . '/../app/view/produtos/index.php';
+    $response = ob_get_clean();
+
+    // Verifica se o formulário de edição existe na página
+    expect($response)->toContain('<form id="form-editar"');
+    expect($response)->toContain('<input type="hidden" name="action" value="update">');
+    expect($response)->toContain('<button type="submit">Salvar</button>');
+});
+
 ?>

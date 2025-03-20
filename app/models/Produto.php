@@ -50,5 +50,16 @@ class Produto {
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         return $stmt->execute();
     }
+
+    public function atualizar($id, $nome, $preco)  
+    {
+        $sql = "UPDATE produtos SET nome = :nome, preco = :preco WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt-> bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->bindParam(":nome", $nome);
+        $stmt->bindParam(":preco", $preco);
+        return $stmt->execute();
+    }
+
 }
 ?>

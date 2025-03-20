@@ -2,7 +2,7 @@
 
 use App\models\Produto;
 use App\config\Database;
-use PDO;
+//use PDO;
 
 beforeEach(function () {
     // Conectar ao banco de dados para testar
@@ -64,4 +64,30 @@ it('deve deletar um produto pelo id', function () {
     $produtosRestantes = $this->produto->listar();
     expect(count($produtosRestantes))->toBe(0); // Nenhum produto restante
 });
+
+it('Deve atualizar um produto existente', function () {
+    // Inserir um produto para poder atualizar
+    $this->produto->adicionar('Produto Antigo', 30.00);
+
+    // Recuperar o produto para obter o ID
+    $produtos = $this->produto->listar();
+    $produtoId = $produtos[0]['id'];
+
+    // Novos valores para atualização
+    $novoNome = 'Produto Atualizado';
+    $novoPreco = 45.99;
+
+    // Testar o método atualizar
+    $result = $this->produto->atualizar($produtoId, $novoNome, $novoPreco);
+    expect($result)->toBeTrue();
+
+    // Recuperar o produto atualizado
+    $produtosAtualizados = $this->produto->listar();
+    expect($produtosAtualizados[0]['nome'])->toBe($novoNome);
+    
+    // Corrigindo a comparação do preço
+    expect((float) $produtosAtualizados[0]['preco'])->toBe($novoPreco);
+});
+
+
 ?>

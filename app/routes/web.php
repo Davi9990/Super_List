@@ -17,10 +17,20 @@ if ($request_method === "POST" && isset($_POST["action"])) {
         $controller->store();
     }
 }
+
 if ($request_method === "GET" && isset($_GET["action"]) && $_GET["action"] === "delete") {
     $controller->delete();
     exit(); // Encerra o script após a exclusão
 }
+
+if($request_method === "POST" && isset($_POST["action"]))
+{
+    if($_POST["action"] === "update")
+    {
+        $controller->update();
+    }
+}   
+
 else {
     $controller->index(); // Sempre carregar a listagem na página inicial
 }

@@ -44,6 +44,10 @@
                             Excluir
                     </button>
                 </a>
+
+                <button onclick="editarProduto(<?= $produto['id'] ?>, '<?= $produto['nome'] ?>', <?= $produto['preco'] ?>)">
+                    Editar
+                </button>
             </td>
         </tr>
     <?php endforeach; ?>
@@ -54,5 +58,25 @@
     </tr>
 <?php endif; ?>
     </table>
+
+    <form id="form-editar" action="/Super_List2/app/public/index.php" method="post" style="display: none;">
+        <input type="hidden" name="action" value="update">
+        <input type="hidden" id="editar-id" name="id">
+        <input type="text" id="editar-nome" name="nome" placeholder="Nome do Produto" required>
+        <input type="number" step="0.01" id="editar-preco" name="preco" placeholder="Preço" required>
+        <button type="submit">Salvar</button>
+        <button type="button" onclick="document.getElementById('form-editar').style.display='none';">Cancelar</button>
+    </form>
+
+    <script>
+        function editarProduto(id, nome, preco) {
+            document.getElementById('form-editar').style.display='block';
+            document.getElementById('editar-id').value = id;
+            document.getElementById('editar-nome').value = nome;
+            document.getElementById('editar-preco').value = preco;
+        }
+    </script>
+
+</html>
 </body>
 </html>

@@ -59,5 +59,22 @@ class ProdutoController
     {
         return $this->produto->getAll(); // Agora retorna direto do objeto injetado
     }  
+
+    public function update()
+    {
+        if($_SERVER["REQUEST_METHOD"] == "POST")
+        {
+            $id = $_POST["id"] ?? "";
+            $nome = $_POST["nome"]?? "";
+            $preco = $_POST["preco"]?? "";
+
+            if(!empty($id) &&!empty($nome) &&!empty($preco))
+            {
+                $this->produto->atualizar($id, $nome, $preco);
+            }
+
+            header("Location: /Super_List2/app/public/index.php");
+        }
+    }
 }
 ?>

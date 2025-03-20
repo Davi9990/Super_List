@@ -35,6 +35,16 @@ test('rota padrão chama index', function () {
     $mock->index();
 });
 
+test('rota POST /?action=update atualiza um produto', function () {
+    $_SERVER['REQUEST_METHOD'] = 'POST';
+    $_POST['action'] = 'update';
+
+    $mock = Mockery::mock(ProdutoController::class);
+    $mock->shouldReceive('update')->once();
+
+    $mock->update();
+});
+
 afterEach(function () {
     Mockery::close();
 });
